@@ -4,6 +4,7 @@ SYNOPSIS:
         [ -r -run ] [ -d -detail ] [ -a -alias ] [ instance-alias ] image-id
         [ -l -login ] [ instance-id | instance-alias ]
         [ -s -search ] query
+        [ -S -stop ] [ ALL | instances-id ... | instances-alias ... ]
         [ -t -terminate ] [ ALL | instances-id ... | instances-alias ... ]
         [ -c -command ] [ instance-id | instances-alias ] command
         [ -key-path ] path
@@ -29,7 +30,7 @@ OPTIONS:
             Take an instance-id or instance-alias as value and log into this instance.
             If the instance is not ready, amz will check for every 10 seconds to try to login.
 
-        -S -search:
+        -s -search:
             Take an query as value, query support wildcard syntax. It will search for images with 
 
         -S -stop:

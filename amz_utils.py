@@ -2,7 +2,7 @@
 # @Author: Tianxiao Yang
 # @Date:   2017-05-13 13:43:46
 # @Last Modified by:   Tianxiao Yang
-# @Last Modified time: 2017-05-13 14:29:24
+# @Last Modified time: 2017-05-13 16:47:51
 
 
 import subprocess
@@ -23,7 +23,7 @@ def log(line):
 
 # print error message and exit program with errorcode 1
 def elog(line):
-    sys.stderr.write(line + "\n")
+    sys.stderr.write("AMZ ERROR: " + str(line) + "\n")
     sys.exit(1)
 
 # function execute:

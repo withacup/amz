@@ -1,0 +1,6 @@
+Host sit
+    IdentityFile ~/.ssh/linux-lab/sit-key
+    HostName linux-lab.cs.stevens.edu
+    User tyang8
+Host *.amazonaws.com
+    IdentityFile ~/.ssh/cs615-key2.pem

@@ -1,0 +1,88 @@
+{
+    "Groups": [],
+    "ReservationId": "r-04c21995df7328070",
+    "Instances": [
+        {
+            "InstanceType": "t2.micro",
+            "EbsOptimized": false,
+            "Monitoring": {
+                "State": "disabled"
+            },
+            "Hypervisor": "xen",
+            "SecurityGroups": [
+                {
+                    "GroupName": "yangSecurity",
+                    "GroupId": "sg-a64e57c1"
+                }
+            ],
+            "Placement": {
+                "GroupName": "",
+                "AvailabilityZone": "us-west-2c",
+                "Tenancy": "default"
+            },
+            "RootDeviceType": "ebs",
+            "RootDeviceName": "/dev/sda1",
+            "PublicDnsName": "",
+            "StateTransitionReason": "",
+            "ClientToken": "",
+            "BlockDeviceMappings": [],
+            "StateReason": {
+                "Message": "pending",
+                "Code": "pending"
+            },
+            "Architecture": "x86_64",
+            "ProductCodes": [],
+            "AmiLaunchIndex": 0,
+            "ImageId": "ami-0531bf65",
+            "VpcId": "vpc-3be5555f",
+            "LaunchTime": "2017-05-14T00:29:42.000Z",
+            "InstanceId": "i-09281a919a4a6fc6c",
+            "SubnetId": "subnet-2aa64072",
+            "PrivateIpAddress": "172.31.12.70",
+            "State": {
+                "Code": 0,
+                "Name": "pending"
+            },
+            "KeyName": "yangKey",
+            "NetworkInterfaces": [
+                {
+                    "PrivateIpAddresses": [
+                        {
+                            "PrivateIpAddress": "172.31.12.70",
+                            "PrivateDnsName": "ip-172-31-12-70.us-west-2.compute.internal",
+                            "Primary": true
+                        }
+                    ],
+                    "Attachment": {
+                        "DeleteOnTermination": true,
+                        "AttachTime": "2017-05-14T00:29:42.000Z",
+                        "AttachmentId": "eni-attach-da1ae5b9",
+                        "Status": "attaching",
+                        "DeviceIndex": 0
+                    },
+                    "Status": "in-use",
+                    "Groups": [
+                        {
+                            "GroupName": "yangSecurity",
+                            "GroupId": "sg-a64e57c1"
+                        }
+                    ],
+                    "VpcId": "vpc-3be5555f",
+                    "Description": "",
+                    "SubnetId": "subnet-2aa64072",
+                    "PrivateIpAddress": "172.31.12.70",
+                    "NetworkInterfaceId": "eni-aef439a1",
+                    "OwnerId": "018903088621",
+                    "SourceDestCheck": true,
+                    "PrivateDnsName": "ip-172-31-12-70.us-west-2.compute.internal",
+                    "MacAddress": "0a:bb:93:34:55:32",
+                    "Ipv6Addresses": []
+                }
+            ],
+            "SourceDestCheck": true,
+            "PrivateDnsName": "ip-172-31-12-70.us-west-2.compute.internal",
+            "VirtualizationType": "hvm"
+        }
+    ],
+    "OwnerId": "018903088621"
+}
