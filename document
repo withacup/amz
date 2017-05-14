@@ -1,7 +1,7 @@
 SYNOPSIS:
 
     amz [ options ] [ value ... ]
-        [ -r -run ] [ -d -detail ] [ -a -alias ] [ instance-alias ] image-id
+        [ -r -run ] [ -d -detail ] [ -a -alias ] [ -u -user ] [ username ] [ instance-alias ] image-id
         [ -l -login ] [ instance-id | instance-alias ]
         [ -s -search ] query
         [ -S -stop ] [ ALL | instances-id ... | instances-alias ... ]
@@ -25,6 +25,7 @@ OPTIONS:
             Take an image-id as value and try to run this instance by defualt settings.
             If -d is specified, awz will ask for more detailed information about running this new instance.
             If -a is specified, an instances-alias is required for referencing this new instance.
+            if -u is specified, an user name is required to be provied to login with ssh, the default value is "root"
 
         -l -login:
             Take an instance-id or instance-alias as value and log into this instance.

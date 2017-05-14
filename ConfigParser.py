@@ -2,7 +2,7 @@
 # @Author: Tianxiao Yang
 # @Date:   2017-05-13 15:56:37
 # @Last Modified by:   Tianxiao Yang
-# @Last Modified time: 2017-05-13 17:12:13
+# @Last Modified time: 2017-05-14 12:57:34
 
 import sys
 from amz_utils import *
@@ -43,7 +43,12 @@ class loads:
 
         f.close()
 
-    def add(newHost):
+    def add(self, newHost):
+
+        for host in self.hostList:
+            if host.hostName == newHost.hostName:
+                elog("multiple host name encountered: " + newHost.hostName + "\nYou need to configure " + self.path + " by yourself now")
+
         self.hostList.append(newHost)
 
     def remove(self, hostName):
@@ -57,7 +62,7 @@ class loads:
     def save(self):
         
         try:
-            f = open("./config", 'w')
+            f = open(self.path, 'w')
         except IOError, err:
             elog(err)
 
@@ -69,6 +74,14 @@ class loads:
 
         f.write(content)
         f.close()
+
+    # check if the new alias is duplicated
+    def isAliasDup(self, alias):
+
+        for host in self.hostList:
+            if host.hostName == alias:
+                return host
+        return None
 
     def __str__(self):
         res = "\n"

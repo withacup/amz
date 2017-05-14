@@ -1,0 +1,10 @@
+Host sit
+    User tyang8
+    HostName linux-lab.cs.stevens.edu
+    IdentityFile ~/.ssh/linux-lab/sit-key
+Host leet
+    User ubuntu
+    HostName 52.41.103.175
+    IdentityFile ~/.ssh/yangKey.pem
+Host *.amazonaws.com
+    IdentityFile ~/.ssh/cs615-key2.pem
