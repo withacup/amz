@@ -2,7 +2,7 @@
 # @Author: Tianxiao Yang
 # @Date:   2017-05-13 15:56:37
 # @Last Modified by:   Tianxiao Yang
-# @Last Modified time: 2017-05-14 12:57:34
+# @Last Modified time: 2017-05-14 16:46:29
 
 import sys
 from amz_utils import *
@@ -51,13 +51,10 @@ class loads:
 
         self.hostList.append(newHost)
 
-    def remove(self, hostName):
-        # it is not effcient, but since a normal person won't have so many host in config, it is still fast enough
-        for index, host in enumerate(self.hostList):
-            if host.hostName == hostName:
-                self.hostList.pop(index)
-                return host
-        return None
+    def remove(self, hostNames):
+
+        self.hostList = filter(lambda host: host.hostName not in hostNames, self.hostList)
+
 
     def save(self):
         
@@ -91,11 +88,11 @@ class loads:
 
 def test():
 
-    parser = ConfigParser(sys.argv[1])
+    parser = loads(sys.argv[1])
 
     print parser
 
-    parser.remove("leet")
+    parser.remove(["leet", "sit"])
 
     parser.save()
 

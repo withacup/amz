@@ -1,7 +1,7 @@
 SYNOPSIS:
 
     amz [ options ] [ value ... ]
-        [ -r -run ] [ -d -detail ] [ -a -alias ] [ -u -user ] [ username ] [ instance-alias ] image-id
+        [ -r -run ] [ -d -detail ] [ -u -user ] [ username ] alias image-id
         [ -l -login ] [ instance-id | instance-alias ]
         [ -s -search ] query
         [ -S -stop ] [ ALL | instances-id ... | instances-alias ... ]

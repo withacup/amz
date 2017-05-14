@@ -3,17 +3,20 @@
 # @Author: Tianxiao Yang
 # @Date:   2017-05-13 13:32:41
 # @Last Modified by:   Tianxiao Yang
-# @Last Modified time: 2017-05-14 14:32:36
+# @Last Modified time: 2017-05-14 16:56:20
 
 import amz_utils
 import json
 import ConfigParser
+import TableParser
 import sys
 
 from collections import deque
 
 CONFIG_PATH = "/Users/yang/.ssh/config"
 IDENTITY_FILE = "/Users/yang/.ssh/aws-keys/yangKey.pem"
+TABLE_PATH = "/Volumes/YangFlashCard/projects/amz/instances/table/table.json"
+INFO_PATH = "/Volumes/YangFlashCard/projects/amz/instances/info/"
 
 def log(line):
     amz_utils.log(line)
@@ -115,36 +118,51 @@ def run_instances(imageId, alias, isDetailed, userName):
 def stop_instances(ids):
     pass
 
-def teminate_instances(ids):
-    pass
+def teminate_instances(instance_names):
+    # 1. find instnace_id and alias in table.json
+    # 2. get instances infomation from ~/.amz/instances/info
+    # 3. remove the corresponding infomation from ~/.ssh/config file
+    # 4. remove the corresponding infomation from ~/.amz/instances/info and ~/.amz/instances/table
+    # 5. terminate instances
+    global TABLE_PATH
+    global INFO_PATH
+
+    table = TableParser(TABLE_PATH)
+    instance_alias_arr = table.find(instance_names)
+    table.remove(instance_alias_arr)
+    table.save()
+
+    # config = ConfigParser(CONFIG_PATH)
+    # configParser.remove(instance_aliases)
+    # configParser.save()
+    # execute('aws ec2 terminate-instances --instance-ids')
+
 
 # instance name can be alias or instance id
-def displayInstance(instance_name):
-    f_table = open("/Volumes/YangFlashCard/projects/amz/instances/table/table.json", 'r')
-    json_string = f_table.read()
-    table_content = {}
-    if json_string:
-        table_content = json.loads(json_string)
-    for alias, ins_id in table_content.items():
-        if alias == instance_name or ins_id == instance_name:
-           f_info = open("/Volumes/YangFlashCard/projects/amz/instances/info/{0}.json".format(alias), 'r')
-           print "\n" + instance_name + ":\n" + f_info.read()
-           f_info.close()
-           f_table.close()
-           return
-    f_table.close()
-    elog("instance {0} not found".format(instance_name))
+# returns instances info as json string 
+def displayInstance(instance_names):
 
-def test(path):
+    global TABLE_PATH
+    global INFO_PATH
+
+    table = TableParser.loads(TABLE_PATH)
+    instance_alias_arr = table.find(instance_names)
+
+    try:
+        for alias in instance_alias_arr:
+            with open(INFO_PATH + alias + ".json", 'r') as ins_info:
+                print "\n" + alias + ":\n" + ins_info.read()
+    except IOError, err:
+        elog(err)
+
+def test():
     # run_instances("ami-0531bf65", "bar", False, "ubuntu")
-    displayInstance("bar")
-    displayInstance("foo")
-    displayInstance("sss")
+    displayInstance(["foo", "bar"])
 
 if __name__ == '__main__':
 
     amz_utils.DEBUG = True 
-    test(sys.argv[1])
+    test()
 
 
 
