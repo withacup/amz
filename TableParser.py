@@ -2,16 +2,23 @@
 # @Author: Tianxiao Yang
 # @Date:   2017-05-14 15:56:55
 # @Last Modified by:   Tianxiao Yang
-# @Last Modified time: 2017-05-14 16:34:53
+# @Last Modified time: 2017-05-14 17:33:45
 
 from amz_utils import *
 import sys
 import json
+import os.path
 
 class loads:
 
     def __init__(self, path):
         self.path = path
+        
+        if not os.path.exists(path):
+            out,err = execute("touch " + path)
+            if err:
+                elog(err, "Failed to create new table.json file in path: {0}".format(self.path))
+
         self.content = {}
         try:
             with open(self.path  , 'r') as table_file:
@@ -19,12 +26,16 @@ class loads:
                 if json_string:
                     self.content = json.loads(json_string)
         except IOError, err:
-            elog(err)
+            elog(err, "Failed to load table file in path: {0}".format(self.path))
 
 # take instance_id or alias as input,
 # returns alias
-    def find(self, ids):
+    def findAlias(self, ids):
         return [pair[0] for pair in self.content.items() if pair[0] in ids or pair[1] in ids]
+
+    def findIds(self, ids):
+        return [pair[1] for pair in self.content.items() if pair[0] in ids or pair[1] in ids]
+
 
     def remove(self, aliases):
         for alias in aliases:

@@ -2,7 +2,7 @@
 # @Author: Tianxiao Yang
 # @Date:   2017-05-13 13:43:46
 # @Last Modified by:   Tianxiao Yang
-# @Last Modified time: 2017-05-13 16:47:51
+# @Last Modified time: 2017-05-14 17:20:49
 
 
 import subprocess
@@ -22,8 +22,8 @@ def log(line):
         print "DEBUG: " + str(round(float(time.time() - START_TIME), 3)) + "s - " + str(line)
 
 # print error message and exit program with errorcode 1
-def elog(line):
-    sys.stderr.write("AMZ ERROR: " + str(line) + "\n")
+def elog(err, description=None):
+    sys.stderr.write("AMZ ERROR: " + str(err) + "\nDESCRIPTION: " + str(description) + "\n")
     sys.exit(1)
 
 # function execute:

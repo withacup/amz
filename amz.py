@@ -3,7 +3,7 @@
 # @Author: Tianxiao Yang
 # @Date:   2017-05-13 13:32:41
 # @Last Modified by:   Tianxiao Yang
-# @Last Modified time: 2017-05-14 16:56:20
+# @Last Modified time: 2017-05-14 17:43:14
 
 import amz_utils
 import json
@@ -42,6 +42,8 @@ def run_instances(imageId, alias, isDetailed, userName):
 
     global CONFIG_PATH
     global IDENTITY_FILE
+    global TABLE_PATH
+    global INFO_PATH
 
     # load ~/.ssh/config into memory, context is the objecet containing the parsed config file
     context = ConfigParser.loads(CONFIG_PATH)
@@ -98,19 +100,23 @@ def run_instances(imageId, alias, isDetailed, userName):
     context.save()
 
     try:
-        f_info = open("/Volumes/YangFlashCard/projects/amz/instances/info/{0}.json".format(alias), 'w')
+        f_info = open(INFO_PATH + alias + ".json", 'w')
         f_info.write(json.dumps(baked_instance, indent=4))
         f_info.close()
 
-        table_content = {}
-        with open("/Volumes/YangFlashCard/projects/amz/instances/table/table.json", 'r') as f_table_read:
-            json_string = f_table_read.read()
-            if json_string:
-                table_content = json.loads(json_string)
+        table = TableParser.loads(TABLE_PATH)
+        table.add(alias, baked_instance["InstanceId"])
+        table.save()
 
-        with open("/Volumes/YangFlashCard/projects/amz/instances/table/table.json", 'w') as f_table_write:
-            table_content[alias] = baked_instance["InstanceId"]
-            f_table_write.write(json.dumps(table_content))
+        # table_content = {}
+        # with open("/Volumes/YangFlashCard/projects/amz/instances/table/table.json", 'r') as f_table_read:
+        #     json_string = f_table_read.read()
+        #     if json_string:
+        #         table_content = json.loads(json_string)
+
+        # with open("/Volumes/YangFlashCard/projects/amz/instances/table/table.json", 'w') as f_table_write:
+        #     table_content[alias] = baked_instance["InstanceId"]
+        #     f_table_write.write(json.dumps(table_content))
 
     except IOError, err:
         elog(err)
@@ -118,7 +124,7 @@ def run_instances(imageId, alias, isDetailed, userName):
 def stop_instances(ids):
     pass
 
-def teminate_instances(instance_names):
+def terminate_instances(instance_names):
     # 1. find instnace_id and alias in table.json
     # 2. get instances infomation from ~/.amz/instances/info
     # 3. remove the corresponding infomation from ~/.ssh/config file
@@ -126,16 +132,28 @@ def teminate_instances(instance_names):
     # 5. terminate instances
     global TABLE_PATH
     global INFO_PATH
+    global CONFIG_PATH
 
-    table = TableParser(TABLE_PATH)
-    instance_alias_arr = table.find(instance_names)
+    table = TableParser.loads(TABLE_PATH) 
+    instance_id_arr = table.findIds(instance_names)
+    instance_alias_arr = table.findAlias(instance_names)
+
+    out,err = execute('aws ec2 terminate-instances --instance-ids ' + " ".join(instance_id_arr))
+    if err:
+        elog(err)
+    log(out)
+
+    for alias in instance_alias_arr:
+        out, err = execute("rm " + INFO_PATH + alias + ".json")
+        if err:
+            elog(err, "Failed to remove info file in path: " + INFO_PATH + alias + ".json")
+
     table.remove(instance_alias_arr)
     table.save()
 
-    # config = ConfigParser(CONFIG_PATH)
-    # configParser.remove(instance_aliases)
-    # configParser.save()
-    # execute('aws ec2 terminate-instances --instance-ids')
+    config = ConfigParser.loads(CONFIG_PATH)
+    configParser.remove(instance_alias_arr)
+    configParser.save()
 
 
 # instance name can be alias or instance id
@@ -146,7 +164,7 @@ def displayInstance(instance_names):
     global INFO_PATH
 
     table = TableParser.loads(TABLE_PATH)
-    instance_alias_arr = table.find(instance_names)
+    instance_alias_arr = table.findAlias(instance_names)
 
     try:
         for alias in instance_alias_arr:
@@ -156,8 +174,13 @@ def displayInstance(instance_names):
         elog(err)
 
 def test():
-    # run_instances("ami-0531bf65", "bar", False, "ubuntu")
-    displayInstance(["foo", "bar"])
+    # run_instances("ami-0531bf65", "foo", False, "ubuntu")
+    # displayInstance(["foo", "bar"])
+    # terminate_instances(["foo", "bar"])
+    # global CONFIG_PATH
+    # parser = ConfigParser.loads(CONFIG_PATH)
+    # parser.remove(["foo", "bar"])
+    # parser.save()
 
 if __name__ == '__main__':
 
