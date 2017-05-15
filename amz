@@ -41,9 +41,6 @@ def search(name):
     log("Number of results: {0}".format(len(result["Images"])))
     log(out)
 
-# Take an image-id as value and try to run this instance by defualt settings.
-# If -d is specified, awz will ask for more detailed information about running this new instance.
-# If -a is specified, an instances-alias is required for referencing this new instance.
 def run_instances(options):
 
     global CONFIG_PATH
