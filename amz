@@ -270,6 +270,8 @@ if __name__ == '__main__':
     amz_utils.DEBUG = True 
 
     options = sys.argv[1:len(sys.argv)]
+    if len(options) < 1:
+        elog("Invalid Option", "Insufficient options")
     op = options[0]
 
     if op == "-r" or op == "-run":
@@ -286,6 +288,9 @@ if __name__ == '__main__':
         command(options[1:len(options)])
     elif op == "-key-path":
         setKeyPath(options[1:len(options)])
+    elif op == "help":
+        out, err = execute("cat ~/.amz/document")
+        print out
     else:
         elog("Invalid Option", "Unkown option: " + op)
 

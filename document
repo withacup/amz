@@ -1,3 +1,4 @@
+
 SYNOPSIS:
 
     amz [ options ] [ value ... ]
@@ -47,19 +48,3 @@ OPTIONS:
 
         -key-path:
             Set defualt absolute key path to start a new instance.
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
