@@ -2,7 +2,7 @@
 # @Author: Tianxiao Yang
 # @Date:   2017-05-13 13:43:46
 # @Last Modified by:   Tianxiao Yang
-# @Last Modified time: 2017-05-14 17:20:49
+# @Last Modified time: 2017-05-14 19:18:11
 
 
 import subprocess
@@ -11,6 +11,7 @@ import sys
 import os
 import signal
 import time
+import traceback
 
 DEBUG = False
 START_TIME = time.time()
@@ -23,6 +24,7 @@ def log(line):
 
 # print error message and exit program with errorcode 1
 def elog(err, description=None):
+    traceback.print_stack()
     sys.stderr.write("AMZ ERROR: " + str(err) + "\nDESCRIPTION: " + str(description) + "\n")
     sys.exit(1)
 

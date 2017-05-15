@@ -2,11 +2,11 @@ SYNOPSIS:
 
     amz [ options ] [ value ... ]
         [ -r -run ] [ -d -detail ] [ -u -user ] [ username ] alias image-id
-        [ -l -login ] [ instance-id | instance-alias ]
-        [ -s -search ] query
+        [ -f -find ] query
+        [ -s -start ] [ ALL | instances-id ... | instances-alias ... ] 
         [ -S -stop ] [ ALL | instances-id ... | instances-alias ... ]
         [ -t -terminate ] [ ALL | instances-id ... | instances-alias ... ]
-        [ -c -command ] [ instance-id | instances-alias ] command
+        [ -c -command ] command [ instance-id | instances-alias ] 
         [ -key-path ] path
 
 DESCRIPTION:
@@ -27,12 +27,11 @@ OPTIONS:
             If -a is specified, an instances-alias is required for referencing this new instance.
             if -u is specified, an user name is required to be provied to login with ssh, the default value is "root"
 
-        -l -login:
-            Take an instance-id or instance-alias as value and log into this instance.
-            If the instance is not ready, amz will check for every 10 seconds to try to login.
+        -f -find:
+            Take an query as value, query support wildcard syntax. It will search for images with the query name provided.
 
-        -s -search:
-            Take an query as value, query support wildcard syntax. It will search for images with 
+        -s -start:
+            Start instances that has been previously stopped.
 
         -S -stop:
             Take instance-ids or instance-aliases as values and stop it.

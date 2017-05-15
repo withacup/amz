@@ -2,7 +2,7 @@
 # @Author: Tianxiao Yang
 # @Date:   2017-05-14 15:56:55
 # @Last Modified by:   Tianxiao Yang
-# @Last Modified time: 2017-05-14 17:33:45
+# @Last Modified time: 2017-05-14 19:35:27
 
 from amz_utils import *
 import sys
@@ -13,7 +13,7 @@ class loads:
 
     def __init__(self, path):
         self.path = path
-        
+
         if not os.path.exists(path):
             out,err = execute("touch " + path)
             if err:
@@ -48,7 +48,7 @@ class loads:
     def save(self):
         try:
             with open(self.path, 'w') as table_file:
-                table_file.write(json.dumps(self.content))
+                table_file.write(json.dumps(self.content, indent=4))
         except IOError, err:
             elog(err)
 

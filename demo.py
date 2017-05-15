@@ -2,12 +2,14 @@ import json
 import os.path
 from amz_utils import *
 
-path = "/Volumes/YangFlashCard/projects/amz/instances/table/table.json"
-if not os.path.exists(path):
-    out,err = execute("touch " + path)
-    if err:
-        print err
-    print out
+# path = "/Volumes/YangFlashCard/projects/amz/instances/table/table.json"
+path = "~"
+print os.path.expanduser(path)
+# if not os.path.exists(path):
+#     out,err = execute("touch " + path)
+#     if err:
+#         print err
+#     print out
 
 # demo = open('./demo.json', 'r+w')
 # demo_dic = {}

@@ -1,0 +1,16 @@
+{
+    "UserName": "ubuntu", 
+    "AvailabilityZone": "us-west-2c", 
+    "InstanceId": "i-03a32a130fe8d07e4", 
+    "PublicDnsName": "ec2-34-208-243-44.us-west-2.compute.amazonaws.com", 
+    "ImageId": "ami-0531bf65", 
+    "KeyName": "yangKey", 
+    "SecurityGroups": [
+        {
+            "GroupName": "yangSecurity", 
+            "GroupId": "sg-a64e57c1"
+        }
+    ], 
+    "PublicIpAddress": "34.208.243.44", 
+    "InstanceType": "t2.micro"
+}
